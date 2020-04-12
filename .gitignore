@@ -1,0 +1,6 @@
+venv
+.idea/misc.xml
+*.iml
+.idea/vcs.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/modules.xml
