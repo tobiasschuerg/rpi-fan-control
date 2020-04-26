@@ -4,13 +4,13 @@ import RPi.GPIO as IO
 from gpiozero import CPUTemperature
 
 GPIO_PIN = 14  # the pin for controlling the fan
-PWM_FREQUENCY = 15  # (Hertz)
+PWM_FREQUENCY = 64  # (Hertz)
 
 ON_THRESHOLD = 60  # (degrees Celsius) when the fan is started
-OFF_THRESHOLD = 55  # (degress Celsius) when the fan is turned off
+OFF_THRESHOLD = 45  # (degress Celsius) when the fan is turned off
 MAX_TEMP = 80  # (temperature) when the fan should be set to max speed
 
-MIN_SPEED = 30  # [0:100] minimum speed for the fan to run
+MIN_SPEED = 40  # [0:100] minimum speed for the fan to run
 MAX_SPEED = 100  # [0:100] maximum speed for the fan to run
 
 UPDATE_INTERVAL = 5  # (seconds) how often the temperature is checked
@@ -46,14 +46,15 @@ if __name__ == '__main__':
     while True:
         temp = cpu.temperature
         if temp > ON_THRESHOLD:
-            fan.start(MIN_SPEED)
+            fan.start(100)
+            time.sleep(2)
             while temp > OFF_THRESHOLD:
                 speed = determine_best_speed(temp)
                 print("temp: " + str(temp) + "C -> cooling " + str(speed) + "%")
                 fan.ChangeDutyCycle(speed)
                 time.sleep(UPDATE_INTERVAL)
                 temp = cpu.temperature
-            fan.stop()
+            fan.ChangeDutyCycle(0)
         else:
             print("temp: " + str(temp))
             time.sleep(UPDATE_INTERVAL)
