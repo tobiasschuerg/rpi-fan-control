@@ -4,12 +4,12 @@ Dynamically adapt the fan speed accroding to the current temperature.
 
 ## setup
 
-Just run
+Clone repository and run
 ```python
 python fan_control.py
 ```
 
-You might want to add this as a cron (`contab -e`) to run automatically on boot:
+You might want to add this as a cron (`crontab -e`) to run automatically on boot:
 ```cron
 @reboot python ~/rpi-fan-control/fan_control.py >> ~/rpi-fan-control/output.log
 ```
